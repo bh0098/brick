@@ -15,8 +15,17 @@ public class Brick implements Drawable {
         private double velocity;
         private Rectangle rectangle = new Rectangle(80,20);
         private Effect glow = new Glow(1);
+        private Color color = Color.rgb(180 ,102,25);
 
-        public Brick(){
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Brick(){
 
         }
         public Brick(double x,double y){
@@ -25,7 +34,7 @@ public class Brick implements Drawable {
         }
 
     public void draw(Stage stage) {
-        rectangle.setFill(Color.rgb(180 ,102,25));
+        rectangle.setFill(color);
         rectangle.setEffect(glow);
 //        rectangle.setY(stage.getScene().getHeight() - 350);
 //        rectangle.setX(90);
@@ -34,7 +43,7 @@ public class Brick implements Drawable {
         public Brick(double addPoint){
             this.addPoint = addPoint;
         }
-        public void accident(int index) { }
+        public void accident() { }
         public final double getAddPoint() {
             return addPoint;
         }
@@ -74,6 +83,12 @@ public class Brick implements Drawable {
     }
     public double getHeight(){
             return rectangle.getHeight();
+    }
+    public void setX(double x){
+        rectangle.setX(x);
+    }
+    public void setY(double y){
+        rectangle.setY(y);
     }
 
     public double getLife() {

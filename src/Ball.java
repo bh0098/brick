@@ -18,6 +18,23 @@ public class Ball implements Moveable, Drawable {
     private double x = 50;
     private double y = 300;
     private final double RADIUS = 5;
+
+    public double getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(double velocityY) {
+        this.velocityY = velocityY;
+    }
+
+    public double getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
+    }
+
     private double velocityY = 3;
     private double velocityX = 2;
     private Circle circle;
@@ -79,6 +96,7 @@ public class Ball implements Moveable, Drawable {
                 Brick list = ((BrickHandle.getInstance().getBricks()).get(i)).get(j);
                 if (circle.getCenterX() + circle.getRadius() < list.getX() + list.getWitdh() && circle.getCenterX() + circle.getRadius() > list.getX()) {
                     if (circle.getCenterY() - circle.getRadius() > list.getY() && circle.getCenterY() - circle.getRadius() < list.getY() + list.getHeight()) {
+                        list.accident();//maybe has a mistake
                         score+=list.getAddPoint();
                         scoreBoard(stage);
                         velocityY *= -1;
