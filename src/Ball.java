@@ -16,7 +16,7 @@ public class Ball implements Moveable, Drawable {
     private double x = 50;
     private double y = 300;
     private final double RADIUS = 5;
-    private double velocityY = 2;
+    private double velocityY = 3;
     private double velocityX = 2;
     private Circle circle;
 
