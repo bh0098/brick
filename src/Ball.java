@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Ball implements Moveable, Drawable {
+    public static final double ballX = 150;
+    public static final double ballY = 350;
     private       Text text = new Text();
     private double score = 0;
     private static Ball ball = new Ball();
@@ -19,6 +21,7 @@ public class Ball implements Moveable, Drawable {
     private double velocityY = 3;
     private double velocityX = 2;
     private Circle circle;
+    private int level=1;
 
     private Ball() {
         circle = new Circle(x, y, RADIUS);
@@ -69,10 +72,11 @@ public class Ball implements Moveable, Drawable {
     }
 
     public void collosion(Stage stage) {
-        int i = 0, j = 0;
-        for (ArrayList<Brick> arrayList : BrickHandle.getInstance().getBricks()) {
-            for (Brick list : arrayList) {
-
+        boolean isEnd =true;
+        Brick temp =  null;
+        for(int i=0;i<BrickHandle.getInstance().getBricks().size();i++){
+            for(int j=0;j<(BrickHandle.getInstance().getBricks()).get(i).size();j++){
+                Brick list = ((BrickHandle.getInstance().getBricks()).get(i)).get(j);
                 if (circle.getCenterX() + circle.getRadius() < list.getX() + list.getWitdh() && circle.getCenterX() + circle.getRadius() > list.getX()) {
                     if (circle.getCenterY() - circle.getRadius() > list.getY() && circle.getCenterY() - circle.getRadius() < list.getY() + list.getHeight()) {
                         score+=list.getAddPoint();
@@ -80,18 +84,32 @@ public class Ball implements Moveable, Drawable {
                         velocityY *= -1;
                         list.setLife(list.getLife() - 1);
                         if (list.getLife() == 0) {
-//                            ((Group) stage.getScene().getRoot()).getChildren().remove(list);
+                            ((Group) stage.getScene().getRoot()).getChildren().remove(list);
                             BrickHandle.getInstance().remove(list);
-                            BrickHandle.getInstance().getBricks().get(j).remove(list);
+                            BrickHandle.getInstance().getBricks().get(i).remove(list);
                         }
                     }
                 }
-                i++;
+                isEnd=false;
             }
-            j++;
         }
-        if (i == 0) {
+//        for (ArrayList<Brick> arrayList : BrickHandle.getInstance().getBricks()) {
+//            for (Brick list : arrayList) {
+//
+//
+//            }
+//        }
+        if (isEnd) {
+            level++;
             System.out.println("level up");
+            circle.setCenterX(ballX);
+            circle.setCenterY(ballY);
+//            Text t= new Text("LEVEL "+(Integer)level);
+//            t.setFont(Font.font("Abyssinica SIL",FontWeight.BOLD,FontPosture.REGULAR,50));
+//            t.setX(stage.getScene().getWidth()-60);
+//            t.setY(40);
+//            t.setFill(Color.BLANCHEDALMOND);
+            //make delay
             BrickHandle.getInstance().makeBrick(stage);
         }
     }
@@ -102,7 +120,7 @@ public class Ball implements Moveable, Drawable {
     public void scoreBoard(Stage stage){
         ((Group)stage.getScene().getRoot()).getChildren().remove(text);
         text.setText(((Double)Ball.getInstance().getScore()).toString());
-        text.setX(stage.getScene().getWidth()-40);
+        text.setX(stage.getScene().getWidth()-60);
         text.setY(40);
         text.setFill(Color.BLANCHEDALMOND);
         text.setStroke(Color.BLUE);
